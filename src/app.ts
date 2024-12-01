@@ -33,27 +33,35 @@
 //     const hasDiscount: boolean = new URLSearchParams(window.location.search).get("discount") === "true";
 //     console.log(calculatePrice(originalPrice, hasDiscount));
 // });
-const taskNameInputElement: HTMLInputElement = document.querySelector("#name");
+import { Task, Category } from "./types/types";
+import { render } from "./helpers/render-tasks.helper.js";
+import { renderCategories } from "./helpers/render-categories.helper.js";
+
+const tasknameInputElement: HTMLInputElement = document.querySelector("#name");
 const addButtonElement: HTMLButtonElement = document.querySelector("button");
 const tasksContainerElement: HTMLElement = document.querySelector(".tasks");
+const categoriesContainerElement: HTMLElement = document.querySelector(".categories");
+let selectedCategory: Category;
 
-const tasks: string[] = [];
+const categories: Category[] = ["general", "work", "gym", "hobby"];
 
-const render = () => {
-    tasksContainerElement.innerHTML = "";
-    tasks.forEach(task => {
-        const taskElement: HTMLElement = document.createElement("li");
-        taskElement.innerText = task;
-        tasksContainerElement.appendChild(taskElement);
-    });
-}
+const tasks: Task[] = [
+    {name: "Zrobić coś", done: false},
+    {name: "Pójść spać", done: false, category: "gym"}, 
+    {name: "Wstać", done: true}];
 
-const addTask = (task: string) => {
+const addTask = (task: Task) => {
     tasks.push(task);
 }
 
+const updateSelectedCategory = (newCategory: Category) => {
+    selectedCategory = newCategory;
+};
+
 addButtonElement.addEventListener("click", (event: Event) => {
     event.preventDefault();
-    addTask(taskNameInputElement.value);
-    render();
+    addTask({name: tasknameInputElement.value, done: false, category: selectedCategory});
+    render(tasks, tasksContainerElement);
 });
+
+renderCategories(categories, categoriesContainerElement, updateSelectedCategory);
