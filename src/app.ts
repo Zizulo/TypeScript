@@ -43,11 +43,13 @@ const tasksContainerElement: HTMLElement = document.querySelector(".tasks");
 const categoriesContainerElement: HTMLElement = document.querySelector(".categories");
 let selectedCategory: Category;
 
-const categories: Category[] = ["general", "work", "gym", "hobby"];
+const categories: Category[] = [Category.GENERAL, Category.GYM, Category.HOBBY,
+    Category.SOCIAL, Category.WORK
+];
 
 const tasks: Task[] = [
     {name: "Zrobić coś", done: false},
-    {name: "Pójść spać", done: false, category: "gym"}, 
+    {name: "Pójść spać", done: false, category: Category.GYM}, 
     {name: "Wstać", done: true}];
 
 const addTask = (task: Task) => {
